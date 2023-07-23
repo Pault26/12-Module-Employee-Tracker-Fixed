@@ -1,190 +1,202 @@
+// Importing required modules
 const express = require('express');
-const inquirer = require("inquirer");
-const db = require('./db/connection');
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const readline = require('readline');
+const db = require('./develop/db/connections');
 
-const PORT = process.env.PORT || 3001;
+// Create an instance of Express
 const app = express();
 
+// Set the server port
+const PORT = process.env.PORT || 3001;
+
+// Create an interface for reading input from the command line
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+// Middleware to parse request body
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// Handle 404 errors
 app.use((req, res) => {
     res.status(404).end();
 });
 
-//The function that will be in control of making the selections, will be called back to from every other function
+// Function to display the initial prompt and handle user choices
 const navigateChoices = () => {
     inquirer.prompt({
         type: 'list',
         name: 'navigate',
-        message: 'What would you like to do?',
-        choices: ['View All Departments',
-            'View All Roles',
-            'View All Employees',
-            'Add A Department',
-            'Add A Role',
-            'Add An Employee',
-            'Update An Employee Role'],
-        // this will deploy a function based off of what choice you make, these are placeholder names as I havent written the functions yet
+        message: 'Select an option',
+        choices: ['All Departments', 'All Roles', 'All Employees', 'Add Department', 'Add Role', 'Add Employee', 'Update Employee Role'],
     }).then(answer => {
         switch (answer.navigate) {
-            case 'View All Departments':
+            case 'All Departments':
                 viewAllDepartments();
                 break;
 
-            case 'View All Roles':
+            case 'All Roles':
                 viewAllRoles();
                 break;
 
-            case 'View All Employees':
+            case 'All Employees':
                 viewAllEmployees();
                 break;
 
-            case 'Add A Department':
+            case 'Add Department':
                 addADepartment();
                 break;
 
-            case 'Add A Role':
+            case 'Add Role':
                 addARole();
                 break;
 
-            case 'Add An Employee':
+            case 'Add Employee':
                 addAnEmployee();
                 break;
 
-            case 'Update An Employee Role':
+            case 'Update Employee Role':
                 updateAnEmployeeRole();
                 break;
         }
-    })
+    }).catch((error) => {
+        console.error('Error occurred:', error);
+        rl.close();
+    });
 };
 
-// Will show you a table of all the departments
+// Function to view all departments
 const viewAllDepartments = () => {
     db.query('SELECT * FROM department;', function (err, results) {
         console.table(results);
         navigateChoices();
     });
-}
+};
 
-// Will show you a table of all the roles
+// Function to view all roles
 const viewAllRoles = () => {
     db.query('SELECT * FROM role;', function (err, results) {
         console.table(results);
         navigateChoices();
     });
-}
+};
 
-// Will show you a table of all current employees
+// Function to view all employees
 const viewAllEmployees = () => {
     db.query('SELECT employee.id, first_name, last_name, role.title, department.name, role.salary, manager_id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id;', function (err, results) {
         console.table(results);
         navigateChoices();
     });
-}
+};
 
-// Will take you through a prompt to create a new department, it then will show you a table of all current departments
+// Function to add a new department
 const addADepartment = () => {
     inquirer.prompt({
-        type: "input",
-        name: "newDepartment",
-        message: "What would you like to name your new department?"
-
+        type: 'input',
+        name: 'newDepartment',
+        message: 'What is the name of your new department?'
     }).then((answer) => {
         db.query("INSERT INTO department (name) VALUES (?)", [answer.newDepartment], (err, results) => {
             db.query("SELECT * FROM department", (err, results) => {
                 console.table(results);
                 navigateChoices();
-            })
-        })
-    })
+            });
+        });
+    });
 };
 
-// Will take you through a prompt to create a new role, it then will show you a table of all current roles
+// Function to add a new role
 const addARole = () => {
-    inquirer.prompt([{
-        type: "input",
-        name: "jobTitle",
-        message: "What would you like to name your new job title?"
-    },
-    {
-        type: "number",
-        name: "salary",
-        message: "How much does this new position pay?"
-    },
-    {
-        type: "number",
-        name: "departmentID",
-        message: "What is the Department ID associated with this new position?"
-    }
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'jobTitle',
+            message: 'What is your new job title?'
+        },
+        {
+            type: 'number',
+            name: 'salary',
+            message: 'What is the salary?'
+        },
+        {
+            type: 'number',
+            name: 'departmentID',
+            message: 'Input an ID for this job:'
+        }
     ]).then((answer) => {
         db.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [answer.jobTitle, answer.salary, answer.departmentID], (err, results) => {
             db.query("SELECT * FROM role", (err, results) => {
                 console.table(results);
                 navigateChoices();
-            })
-        })
-    })
+            });
+        });
+    });
 };
 
-// Will take you through a prompt to add a new employee to the database, it then will show you a table of all current employees
+// Function to add a new employee
 const addAnEmployee = () => {
-    inquirer.prompt([{
-        type: "input",
-        name: "firstName",
-        message: "What is the new employee's first name"
-    },
-    {
-        type: "input",
-        name: "lastName",
-        message: "What is the new employee's last name?"
-    },
-    {
-        type: "number",
-        name: "roleID",
-        message: "What is the Role ID associated with this new employee?"
-    },
-    {
-        type: "number",
-        name: "manager",
-        message: "What is the Id of the manager the new employee reports to?"
-    },
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'firstName',
+            message: 'Input first name:'
+        },
+        {
+            type: 'input',
+            name: 'lastName',
+            message: 'Input last name:'
+        },
+        {
+            type: 'number',
+            name: 'roleID',
+            message: 'Input role ID for new employee:'
+        },
+        {
+            type: 'number',
+            name: 'manager',
+            message: 'Input manager ID:'
+        },
     ]).then((answer) => {
         db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [answer.firstName, answer.lastName, answer.roleID, answer.manager], (err, results) => {
             db.query("SELECT employee.id, first_name, last_name, role.title, department.name, role.salary, manager_id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id;", (err, results) => {
                 console.table(results);
                 navigateChoices();
-            })
-        })
-    })
+            });
+        });
+    });
 };
 
-// Will take you through a prompt to update an existing employee, it then will show you a table of all current employees
+// Function to update an employee's role
 const updateAnEmployeeRole = () => {
-    inquirer.prompt([{
-        type: "number",
-        name: "employeeID",
-        message: "What is the ID number of the employee you wish to update?"
-    },
-    {
-        type: "number",
-        name: "roleID",
-        message: "What is ID of the role you wish to update the employee to?"
-    }
+    inquirer.prompt([
+        {
+            type: 'number',
+            name: 'employeeID',
+            message: 'What is the ID number of the employee you wish to update?'
+        },
+        {
+            type: 'number',
+            name: 'roleID',
+            message: 'What is ID of the role you wish to update the employee to?'
+        }
     ]).then((answer) => {
         db.query("UPDATE employee SET role_id = ? WHERE id = ?", [answer.roleID, answer.employeeID], (err, results) => {
             db.query("SELECT employee.id, first_name, last_name, role.title, department.name, role.salary, manager_id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id;", (err, results) => {
                 console.table(results);
                 navigateChoices();
-            })
-        })
-    })
+            });
+        });
+    });
 };
 
-// This calls the starting function as soon as you call node server.js
+// Start the application by calling the initial prompt function
 navigateChoices();
 
+// Start the server and listen on the specified port
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
