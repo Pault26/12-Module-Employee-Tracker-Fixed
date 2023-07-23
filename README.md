@@ -57,7 +57,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![12-Module-Employee-Tracker-Fixed][product-screenshot]](https://github.com/Pault26/12-Module-Employee-Tracker-Fixed)
 
 This project was created to learn and experiment with using MySQL databases for storing and accessing data. The function of the project is to provide a simple and straightforward way for a hypothetical employer to access data about their employees, their job titles, positions, and income. The project displays a selection of options in a menu that the user can select and view as well as update and change as need be.
 
@@ -113,6 +113,8 @@ _Below is an example of how you can instruct your audience on installing and set
 ## Usage
 
 This project can be used to track important corporate information and to store data about employees. This project could also be repurposed to serve any other function that requires tracking individual things, costs, and locations.
+
+[![12-Module-Employee-Tracker-Fixed][product-usage-screenshot]](https://github.com/Pault26/12-Module-Employee-Tracker-Fixed)
 
 _For more examples, please refer to the [Documentation](https://github.com/Pault26/12-Module-Employee-Tracker-Fixed)_
 
@@ -183,6 +185,8 @@ Special thanks to the following for making this project possible!
 * [ReadMe Badges](https://github.com/alexandresanlim/Badges4-README.md-Profile)
 * [MySQL Tutorial](https://www.youtube.com/watch?v=7S_tz1z_5bA)
 * [MySQL The Basics](https://www.youtube.com/watch?v=Cz3WcZLRaWc)
+* [W3Schools MySQL Tutorial](https://www.w3schools.com/MySQL/mysql_intro.asp)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -193,7 +197,8 @@ Special thanks to the following for making this project possible!
 [license-url]: https://github.com/Pault26/12-Module-Employee-Tracker-Fixed/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/paul-tuemler/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: ./develop/assets/NodeCapture.PNG
+[product-usage-screenshot]: ./develop/assets/NodeFullCapture.PNG
 [MySQL]: https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white
 [MySQL-url]: https://www.mysql.com/
 [Express.js]: https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white

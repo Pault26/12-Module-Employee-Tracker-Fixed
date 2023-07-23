@@ -9,7 +9,7 @@ const db = require('./develop/db/connections');
 const app = express();
 
 // Set the server port
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3020;
 
 // Create an interface for reading input from the command line
 const rl = readline.createInterface({
