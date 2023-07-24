@@ -61,6 +61,8 @@
 
 This project was created to learn and experiment with using MySQL databases for storing and accessing data. The function of the project is to provide a simple and straightforward way for a hypothetical employer to access data about their employees, their job titles, positions, and income. The project displays a selection of options in a menu that the user can select and view as well as update and change as need be.
 
+Youtube Walkthrough: https://youtu.be/KbD7scooTHg
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
