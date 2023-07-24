@@ -32,7 +32,7 @@ const navigateChoices = () => {
         type: 'list',
         name: 'navigate',
         message: 'Select an option',
-        choices: ['All Departments', 'All Roles', 'All Employees', 'Add Department', 'Add Role', 'Add Employee', 'Update Employee Role'],
+        choices: ['All Departments', 'All Roles', 'All Employees', 'Add Department', 'Add Role', 'Add Employee', 'Update Employee Role, Quit'],
     }).then(answer => {
         switch (answer.navigate) {
             case 'All Departments':
@@ -62,6 +62,8 @@ const navigateChoices = () => {
             case 'Update Employee Role':
                 updateAnEmployeeRole();
                 break;
+            default:
+                quit();
         }
     }).catch((error) => {
         console.error('Error occurred:', error);
@@ -192,6 +194,12 @@ const updateAnEmployeeRole = () => {
         });
     });
 };
+
+// Function to Quit
+function quit() {
+    connection.end();
+    process.exit();
+  }
 
 // Start the application by calling the initial prompt function
 navigateChoices();

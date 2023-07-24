@@ -127,7 +127,7 @@ _For more examples, please refer to the [Documentation](https://github.com/Pault
 
 - [x] Add Example Data
 - [x] Add Ability to Add Ro;es, Departments, and Employees
-- [ ] Add Back Out Feature
+- [x] Add Back Out Feature
 - [ ] Add Ability to Clear Data
 - [ ] Multi-language Support
     - [ ] Chinese
