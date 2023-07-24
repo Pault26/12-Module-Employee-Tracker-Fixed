@@ -112,7 +112,7 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-This project can be used to track important corporate information and to store data about employees. This project could also be repurposed to serve any other function that requires tracking individual things, costs, and locations.
+This project can be used to track important corporate information and to store data about employees. This project could also be repurposed to serve any other function that requires tracking individual things, costs, and locations. 
 
 [![12-Module-Employee-Tracker-Fixed][product-usage-screenshot]](https://github.com/Pault26/12-Module-Employee-Tracker-Fixed)
 
@@ -198,6 +198,7 @@ Special thanks to the following for making this project possible!
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/paul-tuemler/
 [product-screenshot]: ./develop/assets/NodeCapture.PNG
+[product-video]: ./develop/assets/Module%20Walk%20Through.mp4
 [product-usage-screenshot]: ./develop/assets/NodeFullCapture.PNG
 [MySQL]: https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white
 [MySQL-url]: https://www.mysql.com/
